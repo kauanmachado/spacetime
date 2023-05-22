@@ -1,11 +1,13 @@
 import { EmptyMemories } from '@/components/EmptyMemories'
 import { api } from '@/lib/api'
-import dayjs from 'dayjs'
 import { cookies } from 'next/headers'
-import ptBr from 'dayjs/locale/pt-br'
+import dayjs from 'dayjs'
+import ptBR from 'dayjs/locale/pt-br'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+
+dayjs.locale(ptBR)
 
 interface Memory {
   id: string
@@ -13,7 +15,6 @@ interface Memory {
   excerpt: string
   createdAt: string
 }
-dayjs.locale(ptBr)
 
 export default async function Home() {
   const isAuthenticated = cookies().has('token')
@@ -23,6 +24,7 @@ export default async function Home() {
   }
 
   const token = cookies().get('token')?.value
+
   const response = await api.get('/memories', {
     headers: {
       Authorization: `Bearer ${token}`,
